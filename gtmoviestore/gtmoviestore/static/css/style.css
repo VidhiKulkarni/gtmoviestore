@@ -1,19 +1,50 @@
+@keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
 .bg-index{
-    background: url("/static/img/background.jpg") no-repeat
+    background: url("/static/img/popcorn.jpg") no-repeat
       fixed;
     background-size: 100% auto;
+    height: 200px;
   }
 
+.text-centerpy-4{
+    color: #ffffff;
+    padding: 70px;
+    text-shadow: 2px 2px 8px #333533;
+}
+
+.about-img {
+    border-radius: 20px; !important
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+    animation: fadeInAnimation ease 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
 .navbar a.nav-link {
+    color: #333533 !important;
+}
+
+.navbar a.nav-link:hover {
     color: #FFFEF6 !important;
 }
 
 .bg-dark {
-    background-color: #2E2E2E !important;
+    background-color: #E7CC74 !important;
 }
 
 .ms-footer {
-    background-color: #202020;
+    background-color: #333533;
 }
 
 .ms-footer p {
@@ -22,7 +53,7 @@
 }
 
 .ms-footer a:hover {
-  color: #6ab43e;
+  color: #fff;
   text-decoration: none;
 }
 
