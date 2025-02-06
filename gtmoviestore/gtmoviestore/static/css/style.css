@@ -31,6 +31,11 @@
     animation-fill-mode: forwards;
 }
 
+.vr {
+    width: 2px;   /* Adjust thickness */
+    background-color: white;
+}
+
 .navbar a.nav-link {
     color: #333533 !important;
 }
@@ -41,6 +46,10 @@
 
 .bg-dark {
     background-color: #E7CC74 !important;
+}
+
+.btn:hover {
+    background-color: #f5df98 !important;
 }
 
 .ms-footer {
