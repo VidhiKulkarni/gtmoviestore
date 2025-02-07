@@ -1,11 +1,12 @@
 from django.db import models
 
-# Create your models here.
 class Movie(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=15.00)
     description = models.TextField()
-    image = models.ImageField(upload_to='movie_images/')
+    image = models.URLField()  # Use URLField to store poster URL from OMDb
+
     def __str__(self):
-        return str(self.id) + ' - ' + self.name
+        return f"{self.id} - {self.name}"
+

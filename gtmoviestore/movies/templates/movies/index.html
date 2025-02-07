@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+
 <div class="p-3">
   <div class="container">
     <div class="row mt-3">
@@ -12,37 +13,41 @@
             <div class="row">
               <div class="col-auto">
                 <div class="input-group col-auto">
-                  <div class="input-group-text">
-                    Search</div>
-                  <input type="text" class="form-control"
-                    name="search">
+                  <div class="input-group-text">Search</div>
+                  <input type="text" class="form-control" name="search" placeholder="Enter a movie name">
                 </div>
               </div>
               <div class="col-auto">
-                <button class="btn bg-dark text-white"
-                  type="submit">Search</button>
+                <button class="btn bg-dark text-white" type="submit">Search</button>
               </div>
             </div>
           </form>
         </p>
       </div>
     </div>
+
+    {% if template_data.movies %}
     <div class="row">
       {% for movie in template_data.movies %}
       <div class="col-md-4 col-lg-3 mb-2">
         <div class="p-2 card align-items-center pt-4">
-          <img src="{{ movie.image.url }}"
-            class="card-img-top rounded img-card-200">
+          <img src="{{ movie.image }}" class="card-img-top rounded img-card-200" alt="{{ movie.name }}">
           <div class="card-body text-center">
-            <a href="{% url 'movies.show' id=movie.id %}"
-              class="btn bg-dark text-white">
+            <a href="{% url 'movies.show' movie.id %}" class="btn bg-dark text-white">
               {{ movie.name }}
             </a>
+
+
+            <p class="mt-3">Price: ${{ movie.price }}</p>
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
+    {% else %}
+      <p>No movies found.</p>
+    {% endif %}
   </div>
 </div>
+
 {% endblock content %}
