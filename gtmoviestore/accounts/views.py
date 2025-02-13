@@ -4,6 +4,12 @@ from .forms import CustomUserCreationForm, CustomErrorList
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 # Create your views here.
 
@@ -53,4 +59,24 @@ def signup(request):
         else:
             template_data['form'] = form
             return render(request, 'accounts/signup.html', {'template_data': template_data})
+        
+def password_reset(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            return render(request, 'accounts/password_reset.html', {'error': 'Passwords do not match'})
+
+        try:
+            user = User.objects.get(username=username)
+            user.set_password(new_password)
+            user.save()
+            update_session_auth_hash(request, user)  # Keep user logged in after password reset
+            return redirect('accounts.login')
+        except User.DoesNotExist:
+            return render(request, 'accounts/password_reset.html', {'error': 'User not found'})
+
+    return render(request, 'accounts/password_reset.html')
 
