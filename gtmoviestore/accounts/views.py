@@ -78,7 +78,7 @@ def request_password_reset(request):
                                         <hr />
                                         <p>Enter your email, and we'll send you a reset link.</p>
                                         <form method="POST">
-                                            <input type="hidden" name="csrfmiddlewaretoken" id="csrf_token">
+                                            <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                                             <p>
                                                 <label for="email">Email</label>
                                                 <input id="email" type="email" name="email" required class="form-control">
@@ -96,9 +96,14 @@ def request_password_reset(request):
                         </div>
                     </div>
                 </div>
+                <script>
+                    document.querySelector("[name='csrfmiddlewaretoken']").value = document.cookie.split('; ')
+                        .find(row => row.startsWith('csrftoken='))
+                        ?.split('=')[1] || "";
+                </script>
             </body>
         </html>
-    """)
+    """.replace("{csrf_token}", request.COOKIES.get("csrftoken", "")))
 
 def reset_password(request, token):
     email = reset_tokens.get(token)
