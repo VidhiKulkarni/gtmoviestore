@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.shortcuts import HttpResponse, redirect
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.middleware.csrf import get_token
 
 # Create your views here.
 # Temporary token storage
@@ -105,6 +106,7 @@ def request_password_reset(request):
         </html>
     """.replace("{csrf_token}", request.COOKIES.get("csrftoken", "")))
 
+
 def reset_password(request, token):
     email = reset_tokens.get(token)
 
@@ -140,7 +142,6 @@ def reset_password(request, token):
         username = request.POST.get("username")
         new_password = request.POST.get("new_password")
 
-        # Find the user by username
         try:
             user = User.objects.get(username=username)
             user.set_password(new_password)
@@ -200,6 +201,9 @@ def reset_password(request, token):
                 </html>
             """)
 
+    # ✅ FIXED: Properly insert CSRF token using `get_token(request)`
+    csrf_token = get_token(request)
+
     return HttpResponse(f"""
         <html>
             <head>
@@ -218,7 +222,7 @@ def reset_password(request, token):
                                         <p>Enter your username and a new password.</p>
 
                                         <form method="POST">
-                                            <input type="hidden" name="csrfmiddlewaretoken" id="csrf_token">
+                                            <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
                                             <p>
                                                 <label for="username">Username:</label>
                                                 <input id="username" type="text" name="username" required class="form-control">
@@ -243,8 +247,6 @@ def reset_password(request, token):
             </body>
         </html>
     """)
-
-
 
 @login_required
 def logout(request):
