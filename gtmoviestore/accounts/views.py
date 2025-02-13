@@ -34,32 +34,68 @@ def request_password_reset(request):
             fail_silently=False,
         )
 
-        return HttpResponse("An email has been sent with the reset link.")
+        return HttpResponse("""
+            <html>
+                <head>
+                    <title>Password Reset Requested</title>
+                    <link rel="stylesheet" href="/static/css/style.css">
+                </head>
+                <body>
+                    <div class="p-3 mt-4">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="card shadow p-3 mb-4 rounded">
+                                        <div class="card-body text-center">
+                                            <h2>Reset Link Sent</h2>
+                                            <hr />
+                                            <p>If the email exists, a password reset link has been sent.</p>
+                                            <a href="/accounts/login/" class="btn bg-dark text-white">Back to Login</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        """)
 
-    # 🛠️ FIXED: Manually insert CSRF token using JavaScript
     return HttpResponse("""
         <html>
             <head>
                 <title>Reset Password</title>
-                <script>
-                    function getCSRFToken() {
-                        return document.cookie.split('; ')
-                            .find(row => row.startsWith('csrftoken='))
-                            ?.split('=')[1];
-                    }
-                </script>
+                <link rel="stylesheet" href="/static/css/style.css">
             </head>
             <body>
-                <h2>Forgot Your Password?</h2>
-                <p>Enter your email, and we'll send you a reset link.</p>
-                <form method="POST">
-                    <input type="hidden" name="csrfmiddlewaretoken" id="csrf_token">
-                    <input type="email" name="email" placeholder="Enter your email" required>
-                    <button type="submit">Send Reset Link</button>
-                </form>
-                <script>
-                    document.getElementById("csrf_token").value = getCSRFToken();
-                </script>
+                <div class="p-3 mt-4">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card shadow p-3 mb-4 rounded">
+                                    <div class="card-body">
+                                        <h2>Forgot Your Password?</h2>
+                                        <hr />
+                                        <p>Enter your email, and we'll send you a reset link.</p>
+                                        <form method="POST">
+                                            <input type="hidden" name="csrfmiddlewaretoken" id="csrf_token">
+                                            <p>
+                                                <label for="email">Email</label>
+                                                <input id="email" type="email" name="email" required class="form-control">
+                                            </p>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn bg-dark text-white">Send Reset Link</button>
+                                            </div>
+                                        </form>
+                                        <div class="text-center mt-3">
+                                            <a href="/accounts/login/" class="text-primary">Back to Login</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </body>
         </html>
     """)
@@ -68,7 +104,32 @@ def reset_password(request, token):
     email = reset_tokens.get(token)
 
     if not email:
-        return HttpResponse("Invalid or expired reset link.")
+        return HttpResponse("""
+            <html>
+                <head>
+                    <title>Invalid Reset Link</title>
+                    <link rel="stylesheet" href="/static/css/style.css">
+                </head>
+                <body>
+                    <div class="p-3 mt-4">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="card shadow p-3 mb-4 rounded">
+                                        <div class="card-body text-center">
+                                            <h2>Invalid or Expired Reset Link</h2>
+                                            <hr />
+                                            <p>Please request a new password reset.</p>
+                                            <a href="/accounts/password_reset/" class="btn bg-dark text-white">Try Again</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+            </html>
+        """)
 
     if request.method == "POST":
         username = request.POST.get("username")
@@ -80,48 +141,103 @@ def reset_password(request, token):
             user.set_password(new_password)
             user.save()
             del reset_tokens[token]  # Remove token after use
-            return HttpResponse("Password has been reset. You can now log in.")
+            return HttpResponse("""
+                <html>
+                    <head>
+                        <title>Password Reset Successful</title>
+                        <link rel="stylesheet" href="/static/css/style.css">
+                    </head>
+                    <body>
+                        <div class="p-3 mt-4">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <div class="card shadow p-3 mb-4 rounded">
+                                            <div class="card-body text-center">
+                                                <h2>Password Reset Successfully</h2>
+                                                <hr />
+                                                <p>You can now log in with your new password.</p>
+                                                <a href="/accounts/login/" class="btn bg-dark text-white">Go to Login</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                </html>
+            """)
         except User.DoesNotExist:
-            return HttpResponse("No user found with that username.")
+            return HttpResponse("""
+                <html>
+                    <head>
+                        <title>Reset Failed</title>
+                        <link rel="stylesheet" href="/static/css/style.css">
+                    </head>
+                    <body>
+                        <div class="p-3 mt-4">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <div class="card shadow p-3 mb-4 rounded">
+                                            <div class="card-body text-center">
+                                                <h2>No User Found</h2>
+                                                <hr />
+                                                <p>The username you entered does not exist.</p>
+                                                <a href="/accounts/password_reset/" class="btn bg-dark text-white">Try Again</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </body>
+                </html>
+            """)
 
-    # 🛠️ FIXED: Use f-string to safely insert token
-    html_content = f"""
+    return HttpResponse(f"""
         <html>
             <head>
                 <title>Reset Password</title>
-                <script>
-                    function getCSRFToken() {{
-                        let csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-                        return csrfCookie ? csrfCookie.split('=')[1] : "";
-                    }}
-                </script>
+                <link rel="stylesheet" href="/static/css/style.css">
             </head>
             <body>
-                <h2>Reset Your Password</h2>
-                <p>Enter your username and a new password.</p>
+                <div class="p-3 mt-4">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="card shadow p-3 mb-4 rounded">
+                                    <div class="card-body">
+                                        <h2>Reset Your Password</h2>
+                                        <hr />
+                                        <p>Enter your username and a new password.</p>
 
-                <form method="POST">
-                    <input type="hidden" name="csrfmiddlewaretoken" id="csrf_token">
-                    <input type="hidden" name="token" value="{token}">
-                    <p>
-                        <label for="username">Username:</label>
-                        <input id="username" type="text" name="username" required>
-                    </p>
-                    <p>
-                        <label for="new_password">New Password:</label>
-                        <input id="new_password" type="password" name="new_password" required>
-                    </p>
-                    <button type="submit">Reset Password</button>
-                </form>
-
-                <script>
-                    document.getElementById("csrf_token").value = getCSRFToken();
-                </script>
+                                        <form method="POST">
+                                            <input type="hidden" name="csrfmiddlewaretoken" id="csrf_token">
+                                            <p>
+                                                <label for="username">Username:</label>
+                                                <input id="username" type="text" name="username" required class="form-control">
+                                            </p>
+                                            <p>
+                                                <label for="new_password">New Password:</label>
+                                                <input id="new_password" type="password" name="new_password" required class="form-control">
+                                            </p>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn bg-dark text-white">Reset Password</button>
+                                            </div>
+                                        </form>
+                                        <div class="text-center mt-3">
+                                            <a href="/accounts/login/" class="text-primary">Back to Login</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </body>
         </html>
-    """
-
-    return HttpResponse(html_content)
+    """)
 
 
 
