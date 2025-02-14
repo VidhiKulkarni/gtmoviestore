@@ -39,6 +39,15 @@ def request_password_reset(request):
             <html>
                 <head>
                     <title>Password Reset Requested</title>
+                    <link href=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel=
+      "stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href=
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+    </script>
                     <link rel="stylesheet" href="/static/css/style.css">
                 </head>
                 <body>
@@ -51,7 +60,7 @@ def request_password_reset(request):
                                             <h2>Reset Link Sent</h2>
                                             <hr />
                                             <p>If the email exists, a password reset link has been sent.</p>
-                                            <a href="/accounts/login/" class="btn bg-dark text-white">Back to Login</a>
+                                            <a href="/accounts/login/" class="btn btn-outline-secondary mb-2 no-hover">Back to Login</a>
                                         </div>
                                     </div>
                                 </div>
@@ -66,6 +75,15 @@ def request_password_reset(request):
         <html>
             <head>
                 <title>Reset Password</title>
+                <link href=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel=
+      "stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href=
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+    </script>
                 <link rel="stylesheet" href="/static/css/style.css">
             </head>
             <body>
@@ -89,7 +107,7 @@ def request_password_reset(request):
                                             </div>
                                         </form>
                                         <div class="text-center mt-3">
-                                            <a href="/accounts/login/" class="text-primary">Back to Login</a>
+                                            <a href="/accounts/login/" class="btn btn-outline-secondary mb-2 no-hover">Back to Login</a>
                                         </div>
                                     </div>
                                 </div>
@@ -115,6 +133,15 @@ def reset_password(request, token):
             <html>
                 <head>
                     <title>Invalid Reset Link</title>
+                    <link href=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel=
+      "stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href=
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+    </script>
                     <link rel="stylesheet" href="/static/css/style.css">
                 </head>
                 <body>
@@ -151,6 +178,15 @@ def reset_password(request, token):
                 <html>
                     <head>
                         <title>Password Reset Successful</title>
+                        <link href=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel=
+      "stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href=
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+    </script>
                         <link rel="stylesheet" href="/static/css/style.css">
                     </head>
                     <body>
@@ -178,6 +214,15 @@ def reset_password(request, token):
                 <html>
                     <head>
                         <title>Reset Failed</title>
+                        <link href=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel=
+      "stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href=
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+    </script>
                         <link rel="stylesheet" href="/static/css/style.css">
                     </head>
                     <body>
@@ -208,6 +253,15 @@ def reset_password(request, token):
         <html>
             <head>
                 <title>Reset Password</title>
+                <link href=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel=
+      "stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href=
+      "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src=
+      "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+    </script>
                 <link rel="stylesheet" href="/static/css/style.css">
             </head>
             <body>
@@ -236,7 +290,7 @@ def reset_password(request, token):
                                             </div>
                                         </form>
                                         <div class="text-center mt-3">
-                                            <a href="/accounts/login/" class="text-primary">Back to Login</a>
+                                            <a href="/accounts/login/" class="btn btn-outline-secondary mb-2 no-hover">Back to Login</a>
                                         </div>
                                     </div>
                                 </div>

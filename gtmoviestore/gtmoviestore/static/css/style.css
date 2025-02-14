@@ -52,6 +52,18 @@
     background-color: #f5df98 !important;
 }
 
+.no-hover:hover {
+   text-decoration: none; /* Disables text decoration on hover */
+    cursor: default; /* Removes pointer cursor on hover */
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+.no-hover.btn-danger {
+    background-color: #dc3545 !important; /* Force red background */
+    color: white !important;
+}
+
 .ms-footer {
     background-color: #333533;
 }
