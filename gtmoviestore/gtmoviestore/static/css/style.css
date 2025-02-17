@@ -48,7 +48,7 @@
     background-color: #E7CC74 !important;
 }
 
-.btn:hover {
+.btn:not(.btn-danger):hover {
     background-color: #f5df98 !important;
 }
 
@@ -62,6 +62,11 @@
 .no-hover.btn-danger {
     background-color: #dc3545 !important; /* Force red background */
     color: white !important;
+}
+
+.no-hover.btn-danger:hover {
+    background-color: darkred !important;
+    border-color: darkred !important;
 }
 
 .ms-footer {

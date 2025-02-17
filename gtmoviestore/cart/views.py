@@ -29,6 +29,14 @@ def add(request, id):
     request.session['cart'] = cart
     return redirect('cart.index')
 
+def delete(request, id):
+    get_object_or_404(Movie, id=id)
+    cart = request.session.get('cart', {})
+    if str(id) in cart:  # Ensure the key exists before deleting
+        del cart[str(id)]
+        request.session['cart'] = cart  # Save the updated cart in session
+    return redirect('cart.index')
+
 def clear(request):
     request.session['cart'] = {}
     return redirect('cart.index')
