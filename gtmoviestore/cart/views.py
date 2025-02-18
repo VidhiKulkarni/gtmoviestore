@@ -32,9 +32,12 @@ def add(request, id):
 def delete(request, id):
     get_object_or_404(Movie, id=id)
     cart = request.session.get('cart', {})
-    if str(id) in cart:  # Ensure the key exists before deleting
-        del cart[str(id)]
-        request.session['cart'] = cart  # Save the updated cart in session
+    if str(id) in cart:  # Ensure item exists in cart
+        cart[str(id)] = max(1, int(cart[str(id)]) - 1)  # Decrease but not below 1
+        if cart[str(id)] == 1:  # Optional: remove item if quantity is 1
+            del cart[str(id)]
+
+    request.session['cart'] = cart  # Save the updated cart in session
     return redirect('cart.index')
 
 def clear(request):
