@@ -12,5 +12,6 @@ Welcome to **GTMovieStore**! This was our **first CS 2340 project**, developed o
 To Run the Program:
 pip install python-dotenv
 pip install requests
+python -m pip install Pillow
 
 
